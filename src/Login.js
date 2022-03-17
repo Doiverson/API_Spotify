@@ -23,8 +23,9 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
 };
 
 
-const client_id = '232a6cc4dd7943138a15c6b93e680b59';
-const redirect_uri = 'http://localhost:3000/callback'
+
+const client_id = process.env.REACT_APP_SPOTIFY_ID;
+const redirect_uri = 'http://localhost:3000/main'
 
 const state = generateRandomString(16);
 const stateKey = 'spotify_auth_state';
@@ -39,7 +40,7 @@ url += '&scope=' + encodeURIComponent(scope);
 url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
 url += '&state=' + encodeURIComponent(state);
 
-const Main = () => {
+const Login = () => {
 
     useEffect(() => {
         if (window.location.hash) {
@@ -67,4 +68,4 @@ const Main = () => {
     )
 }
 
-export default Main;
+export default Login;
