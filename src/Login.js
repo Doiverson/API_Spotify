@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 const generateRandomString = (length) => {
     var text = '';
@@ -9,20 +9,6 @@ const generateRandomString = (length) => {
     }
     return text;
 };
-
-const getReturnedParamsFromSpotifyAuth = (hash) => {
-    const stringAfterHashtag = hash.substring(1);
-    const paramsInUrl = stringAfterHashtag.split("&");
-    const paramsSplitUp = paramsInUrl.reduce((accumulator, currentValue) => {
-        const [key, value] = currentValue.split("=");
-        accumulator[key] = value;
-        return accumulator;
-    }, {});
-
-    return paramsSplitUp;
-};
-
-
 
 const client_id = process.env.REACT_APP_SPOTIFY_ID;
 const redirect_uri = 'http://localhost:3000/main'
@@ -42,19 +28,6 @@ url += '&state=' + encodeURIComponent(state);
 
 const Login = () => {
 
-    useEffect(() => {
-        if (window.location.hash) {
-            const { access_token, expires_in, token_type } =
-                getReturnedParamsFromSpotifyAuth(window.location.hash);
-
-            localStorage.clear();
-
-            localStorage.setItem("accessToken", access_token);
-            localStorage.setItem("tokenType", token_type);
-            localStorage.setItem("expiresIn", expires_in);
-        }
-    }, [window.location.hash])
-
     const handleLogin = () => {
         window.location = url;
     };
@@ -63,7 +36,6 @@ const Login = () => {
         <div>
             <h1>Spotify Login</h1>
             <button onClick={handleLogin}>Login</button>
-
         </div>
     )
 }
